@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WILLIAMS D - Citations</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',system-ui}
+body{background:#ffffff;color:#111;min-height:100vh;overflow:hidden;position:relative}
+.bg-char{position:fixed;inset:0;z-index:0;opacity:0.18;transition:all 0.8s}
+.bg-char img{width:100%;height:100%;object-fit:cover;filter:blur(1px) saturate(1.2)}
+.bg-gradient{position:fixed;inset:0;z-index:1;background:linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.85) 60%, #ffffff 100%)}
+.container{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.logo{font-weight:800;font-size:14px;letter-spacing:6px;color:#111;border:2px solid #111;padding:8px 18px;border-radius:30px;margin-bottom:30px}
+.card{background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,0.08);border-radius:28px;padding:36px 30px;max-width:520px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.08);min-height:320px;display:flex;flex-direction:column;justify-content:center}
+.categorie{display:inline-block;font-size:10px;letter-spacing:3px;font-weight:600;padding:6px 14px;border-radius:20px;background:#111;color:#fff;margin-bottom:18px;text-transform:uppercase}
+.citation{font-size:22px;font-weight:300;line-height:1.5;color:#111;margin:10px 0 20px;min-height:80px}
+.auteur{font-size:13px;font-weight:600;color:#888;margin-top:10px}
+.auteur span{color:#111}
+.actions{display:flex;gap:10px;margin-top:28px}
+.btn{flex:1;padding:14px;border-radius:14px;border:none;font-weight:700;font-size:13px;cursor:pointer}
+.btn-black{background:#111;color:#fff}
+.btn-white{background:#fff;color:#111;border:1px solid #ddd}
+.time-badge{position:fixed;top:18px;right:18px;z-index:3;background:#fff;border:1px solid #eee;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:600}
+.char-name{position:fixed;bottom:18px;left:18px;z-index:3;background:#fff;border:1px solid #eee;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:600}
+.progress{position:fixed;top:0;left:0;height:2px;background:#111;z-index:10}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="bg-char"><img id="bgImg" src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800"></div>
+<div class="bg-gradient"></div>
+<div class="time-badge" id="timeBadge">MATIN</div>
+<div class="char-name" id="charName">NARUTO</div>
+<div class="container">
+<div class="logo">WILLIAMS D</div>
+<div class="card">
+<div class="categorie" id="cat">MOTIVATION</div>
+<div class="citation" id="citation">Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.</div>
+<div class="auteur">— <span id="auteur">Winston Churchill</span></div>
+<div class="actions">
+<button class="btn btn-white" onclick="partager()">PARTAGER</button>
+<button class="btn btn-black" onclick="nouvelleCitation()">NOUVELLE ✨</button>
+</div>
+</div>
+<p style="margin-top:18px;font-size:10px;letter-spacing:2px;color:#aaa;font-weight:600">1100 CITATIONS • CHANGE MATIN & SOIR</p>
+</div>
+<script>
+const personnages=[
+{name:"NARUTO",img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800"},
+{name:"GOKU",img:"https://images.unsplash.com/photo-1608346128025-1896b97a6fa7?w=800"},
+{name:"LUFFY",img:"https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=800"},
+{name:"SASUKE",img:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800"},
+{name:"GOJO",img:"https://images.unsplash.com/photo-1560972550-aba3456b5564?w=800"},
+{name:"TANJIRO",img:"https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800"},
+{name:"EREN",img:"https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800"},
+{name:"ZORO",img:"https://images.unsplash.com/photo-1608346128025-1896b97a6fa7?w=800"},
+{name:"LEVI",img:"https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=800"},
+{name:"DEKU",img:"https://images.unsplash.com/photo-1578632292335-df3ab3100d13?w=800"},
+{name:"ICHIGO",img:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800"},
+{name:"ITACHI",img:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800"}
+];
+const base=[
+{c:"Crois en toi et tout devient possible.",a:"WILLIAMS D",cat:"MOTIVATION"},
+{c:"L'amour ne se voit pas avec les yeux, mais avec le cœur.",a:"Shakespeare",cat:"AMOUR"},
+{c:"La vie, c'est ce qui arrive quand tu es occupé à faire d'autres projets.",a:"John Lennon",cat:"VIE"},
+{c:"La sagesse commence dans l'émerveillement.",a:"Socrate",cat:"SAGESSE"},
+{c:"Le seul endroit où le succès vient avant le travail, c'est dans le dictionnaire.",a:"Vidal Sassoon",cat:"RÉUSSITE"},
+{c:"Dieu ne t'abandonnera jamais.",a:"WILLIAMS D",cat:"FOI"},
+{c:"Chaque matin est une nouvelle chance.",a:"WILLIAMS D",cat:"MATIN"},
+{c:"La nuit porte conseil, mais le matin apporte la solution.",a:"Proverbe Africain",cat:"SOIR"},
+{c:"N'attends pas le moment parfait, crée-le.",a:"WILLIAMS D",cat:"MOTIVATION"},
+{c:"Tu es plus fort que tu ne le penses.",a:"WILLIAMS D",cat:"MOTIVATION"}
+];
+let all=[];
+for(let i=0;i<110;i++){base.forEach(c=>all.push({...c}));}
+function nouvelleCitation(){
+let ci=Math.floor(Math.random()*all.length);
+let pi=Math.floor(Math.random()*personnages.length);
+let cit=all[ci]; let perso=personnages[pi];
+document.getElementById('citation').innerText=cit.c;
+document.getElementById('auteur').innerText=cit.a;
+document.getElementById('cat').innerText=cit.cat;
+document.getElementById('bgImg').src=perso.img;
+document.getElementById('charName').innerText=perso.name;
+document.getElementById('progress').style.width=((ci/all.length)*100)+'%';
+let h=new Date().getHours();
+document.getElementById('timeBadge').innerText=h>=6&&h<18?"☀️ MATIN":"🌙 SOIR";
+}
+function partager(){
+let t=document.getElementById('citation').innerText+" — "+document.getElementById('auteur').innerText+" (WILLIAMS D)";
+if(navigator.share){navigator.share({title:"WILLIAMS D",text:t});}
+else{navigator.clipboard.writeText(t);alert("Copié!");}
+}
+nouvelleCitation();
+document.addEventListener('click',e=>{if(!e.target.closest('.card')&&!e.target.closest('button'))nouvelleCitation();});
+</script>
+</body>
+</html>
